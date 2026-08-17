@@ -4,7 +4,7 @@ import pandas as pd
 
 # Parte 1: IMPORTAÇÃO E INSPEÇÃO INICIAL DOS DADOS
 
-print("SPRINT 1: Carregamento e Inspeção Inicial da Base de Dados")
+print("Parte 1: Carregamento e Inspeção Inicial da Base de Dados")
 print("=" * 60)
 
 # Path do arquivo (ajuste o caminho de acordo com seu ambiente/Colab/VSCode)
@@ -30,10 +30,10 @@ print("\n--- Primeiras 5 linhas ---")
 print(df.head())
 
 # ==============================================================================
-# SPRINT 2 & 3: TRATAMENTO DE STRINGS, DATAS, NUMÉRICOS, NULOS E DUPLICATAS
+# Partes 2 e 3: Tratamento de dados - Dados duplicados e incompletos
 # ==============================================================================
 print("\n" + "=" * 60)
-print("SPRINT 2 & 3: Identificação de Problemas, Limpeza e Transformação")
+print("Partes 2 e 3: Identificação de Problemas, Limpeza e Transformação")
 print("=" * 60)
 
 # 1. Identificação de Valores Nulos e Duplicatas Iniciais
