@@ -96,13 +96,13 @@ if col_valor:
         df_limpo[nome_col_valor] = pd.to_numeric(
             df_limpo[nome_col_valor], errors="coerce"
         )
-        print(f"✅ Coluna '{nome_col_valor}' tratada e convertida para float.")
+        print(f" Coluna '{nome_col_valor}' tratada e convertida para float.")
 
 # Tratamento de Remoção de Duplicatas
 if duplicatas_iniciais > 0:
     df_limpo = df_limpo.drop_duplicates()
     print(
-        f"✅ {duplicatas_iniciais} registros duplicados removidos com sucesso."
+        f" {duplicatas_iniciais} registros duplicados removidos com sucesso."
     )
 
 # Tratamento de Nulos (Estratégia Escolhida)
