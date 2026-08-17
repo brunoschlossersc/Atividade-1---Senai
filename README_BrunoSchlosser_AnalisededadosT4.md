@@ -88,5 +88,5 @@ git add README_SeuNome_Analise_de_Dados_T1.md
 git commit -m "docs(Sprint 5 e 6): Adiciona README detalhado com instruções de uso e insights do projeto"
 
 # 6. Conectar ao repositório público do seu GitHub e subir as alterações
-# Padrão de nome exigido: Miniprojeto_NomeAluno_Analise_de_Dados_T1
-git remote add origin 
+[# Padrão de nome exigido: Miniprojeto_NomeAluno_Analise_de_Dados_T1
+git remote add origin: ](https://github.com/brunoschlossersc/Atividade-1---Senai)
