@@ -51,6 +51,84 @@ df_limpo = df.copy()
 
 # Função para limpeza de textos/strings
 def limpar_texto(texto):
+    def limpar_texto(texto):
+    if pd.isna(texto):
+        return texto
+    texto = str(texto).strip()  # Remove espaços nas pontas
+    texto = re.sub(r"\s+", " ", texto)  # Remove espaços duplos
+    return texto.title()  # Padroniza Capitalização
+
+
+# Aplicar limpeza de string em colunas do tipo object
+colunas_texto = df_limpo.select_dtypes(include=["object"]).columns
+for col in colunas_texto:
+    # Evitar aplicar na coluna de Data por enquanto
+    if "data" not in col.lower():
+        df_limpo[col] = df_limpo[col].apply(limpar_texto)
+
+# Identificar e padronizar coluna de Data (ex: 'Data', 'data_compra', 'DATA')
+col_data = [c for c in df_limpo.columns if "data" in c.lower()]
+if col_data:
+    nome_col_data = col_data[0]
+    # Converter para Datetime
+    df_limpo[nome_col_data] = pd.to_datetime(
+        df_limpo[nome_col_data], errors="coerce"
+    )
+    print(f"✅ Coluna '{nome_col_data}' convertida para datetime.")
+
+# Tratamento de valores monetários/numéricos se formatados como texto (ex: 'R$ 100,50')
+col_valor = [
+    c
+    for c in df_limpo.columns
+    if any(k in c.lower() for k in ["valor", "preco", "preço", "venda"])
+]
+if col_valor:
+    nome_col_valor = col_valor[0]
+    if df_limpo[nome_col_valor].dtype == "object":
+        df_limpo[nome_col_valor] = (
+            df_limpo[nome_col_valor]
+            .astype(str)
+            .str.replace("R$", "", regex=False)
+            .str.replace(".", "", regex=False)
+            .str.replace(",", ".", regex=False)
+            .str.strip()
+        )
+        df_limpo[nome_col_valor] = pd.to_numeric(
+            df_limpo[nome_col_valor], errors="coerce"
+        )
+        print(f"✅ Coluna '{nome_col_valor}' tratada e convertida para float.")
+
+# Tratamento de Remoção de Duplicatas
+if duplicatas_iniciais > 0:
+    df_limpo = df_limpo.drop_duplicates()
+    print(
+        f"✅ {duplicatas_iniciais} registros duplicados removidos com sucesso."
+    )
+
+# Tratamento de Nulos (Estratégia Escolhida)
+# - Colunas categóricas vazias: preenchidas com "Não Informado"
+# - Colunas numéricas (ex: número de filhos): imputação pela Mediana (resiliente a outliers)
+col_filhos = [
+    c
+    for c in df_limpo.columns
+    if any(k in c.lower() for k in ["filho", "filhos", "qtd_filhos"])
+]
+nome_col_filhos = col_filhos[0] if col_filhos else "Numero_Filhos"
+
+if nome_col_filhos in df_limpo.columns:
+    mediana_filhos = df_limpo[nome_col_filhos].median()
+    df_limpo[nome_col_filhos] = df_limpo[nome_col_filhos].fillna(mediana_filhos)
+    print(
+        f"✅ Nulos na coluna '{nome_col_filhos}' imputados pela mediana ({mediana_filhos})."
+    )
+
+# Preencher demais nulos categóricos restantes
+for col in df_limpo.select_dtypes(include=["object"]).columns:
+    df_limpo[col] = df_limpo[col].fillna("Não Informado")
+
+print(
+    f"Total de nulos na base após limpeza: {df_limpo.isnull().sum().sum()}\n"
+)
     if pd.isna(texto):
         return texto
     texto = str(texto).strip()  # Remove espaços nas pontas
