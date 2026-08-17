@@ -2,7 +2,7 @@ import re
 import numpy as np
 import pandas as pd
 
-# Parte 1: IMPORTAÇÃO E INSPEÇÃO INICIAL DOS DADOS
+# Parte 1: Importação de dados
 
 print("Parte 1: Carregamento e Inspeção Inicial da Base de Dados")
 print("=" * 60)
@@ -12,10 +12,10 @@ file_path = "Varejo.csv"
 
 try:
     df = pd.read_csv(file_path)
-    print("✅ Base de dados carregada com sucesso!\n")
+    print(" Base de dados carregada com sucesso!\n")
 except FileNotFoundError:
     print(
-        f"❌ Arquivo '{file_path}' não encontrado. Certifique-se de que o arquivo está no mesmo diretório."
+        f" Arquivo '{file_path}' não encontrado. Certifique-se de que o arquivo está no mesmo diretório."
     )
     # Exemplo genérico fallback para demonstração
     exit()
@@ -74,7 +74,7 @@ if col_data:
     df_limpo[nome_col_data] = pd.to_datetime(
         df_limpo[nome_col_data], errors="coerce"
     )
-    print(f"✅ Coluna '{nome_col_data}' convertida para datetime.")
+    print(f" Coluna '{nome_col_data}' convertida para datetime.")
 
 # Tratamento de valores monetários/numéricos se formatados como texto (ex: 'R$ 100,50')
 col_valor = [
@@ -227,7 +227,7 @@ if col_cat and col_valor:
 
 # Exportar DataFrame limpo para uso posterior (dashboard/BI)
 df_limpo.to_csv("Varejo_Tratado.csv", index=False)
-print("\n✅ Base de dados limpa exportada com sucesso como 'Varejo_Tratado.csv'")
+print("\n Base de dados limpa exportada com sucesso como 'Varejo_Tratado.csv'")
 
 print("\n" + "=" * 60)
 print("RELATÓRIO E BLOCOS DE CONCLUSÕES (INSIGHTS E PONTOS REMANESCENTES)")
